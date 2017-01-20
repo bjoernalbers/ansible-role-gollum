@@ -1,2 +1,108 @@
 ---
-# tasks file for bjoernalbers.gollum
+- name: create directories
+  file:
+    path: "{{ item }}"
+    owner: "{{ gollum_user }}"
+    group: "{{ gollum_group }}"
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: root
+  with_items:
+    - "{{ gollum_home }}"
+    - "{{ gollum_var }}"
+    - "{{ gollum_wiki }}"
+
+- name: update homebrew
+  homebrew:
+    update_homebrew: yes
+
+- name: add homebrew repository
+  homebrew_tap:
+    name: homebrew/dupes
+    state: present
+
+- name: install homebrew packages
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ gollum_homebrew_packages }}"
+
+# NOTE: This doesn't install bundler at all.
+#- name: install bundler system-wide
+#gem:
+#name: bundler
+#state: latest
+#user_install: False
+#become: yes
+#become_user: root
+#tags: debug
+
+- name: update rubygems
+  command: gem update --system
+  become: yes
+  become_user: root
+  register: gem_update
+  changed_when: '"Successfully installed rubygems-update" in gem_update.stdout'
+
+- name: install bundler
+  command: gem install bundler --no-ri --no-rdoc
+  args:
+    creates: "/usr/local/bin/bundle"
+  become: yes
+  become_user: root
+
+- name: copy gemfile
+  template:
+    src: "Gemfile.j2"
+    dest: "{{ gollum_home }}/Gemfile"
+
+- name: configure build flags
+  shell: >
+    if ! grep -i "{{ item.gem }}.*{{ item.flags }}"
+    "{{ ansible_env.HOME }}/.bundle/config"; then
+      bundle config "build.{{ item.gem }}" "{{ item.flags }}";
+      echo "CHANGED";
+    fi
+  register: configure_build_flags
+  changed_when: '"CHANGED" in configure_build_flags.stdout'
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+  with_items:
+    - { gem: "charlock_holmes", flags: "--with-icu-dir=/usr/local/opt/icu4c" }
+    - { gem: "nokogiri", flags: "--use-system-libraries" }
+
+- name: install gollum
+  command: bundle install --path vendor --binstubs
+  args:
+    chdir: "{{ gollum_home }}"
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+  register: bundle_install
+  changed_when: '"Installing" in bundle_install.stdout'
+  notify: restart gollum
+
+- name: initialize wiki
+  command: git init --bare
+  args:
+    chdir: "{{ gollum_wiki }}"
+    creates: "HEAD"
+  notify: restart gollum
+
+- name: create gollum launchd plist
+  template:
+    src: "gollum.plist.j2"
+    dest: "{{ gollum_launchd_plist }}"
+    owner: root
+    group: wheel
+    mode: 0644
+  become: yes
+  become_user: root
+  notify: restart gollum
+
+- name: start gollum
+  launchd:
+    name: "{{ gollum_launchd_label }}"
+    state: started
+  become: yes
+  become_user: root

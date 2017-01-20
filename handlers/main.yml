@@ -1,2 +1,7 @@
 ---
-# handlers file for bjoernalbers.gollum
+- name: restart gollum
+  launchd:
+    name: "{{ gollum_launchd_label }}"
+    state: restarted
+  become: yes
+  become_user: root
