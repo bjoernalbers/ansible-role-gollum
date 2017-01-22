@@ -28,20 +28,6 @@
     state: present
   with_items: "{{ gollum_homebrew_packages }}"
 
-- name: update rubygems
-  command: gem update --system
-  become: yes
-  become_user: root
-  register: gem_update
-  changed_when: '"Installing" in gem_update.stdout'
-
-- name: install bundler
-  command: gem install bundler --no-document --bindir /usr/local/bin
-  args:
-    creates: /usr/local/bin/bundle
-  become: yes
-  become_user: root
-
 - name: copy gemfile
   template:
     src: "Gemfile.j2"
