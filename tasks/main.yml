@@ -29,9 +29,9 @@
   with_items: "{{ gollum_homebrew_packages }}"
 
 - name: copy gemfile
-  template:
-    src: "Gemfile.j2"
-    dest: "{{ gollum_home }}/Gemfile"
+  copy:
+    src: "Gemfile"
+    dest: "{{ gollum_home }}"
 
 - name: configure build flags
   shell: >
