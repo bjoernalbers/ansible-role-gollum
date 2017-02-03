@@ -1,8 +1,9 @@
-Gollum
-======
+Ansible Role: Gollum
+====================
 
-Ansible Role to install a [Gollum Wiki](https://github.com/gollum/gollum)
-on macOS / Mac OS X.
+[![Build Status](https://travis-ci.org/bjoernalbers/ansible-role-gollum.svg?branch=master)](https://travis-ci.org/bjoernalbers/ansible-role-gollum)
+
+Install [Gollum Wiki](https://github.com/gollum/gollum) on macOS / Mac OS X.
 
 Requirements
 ------------
