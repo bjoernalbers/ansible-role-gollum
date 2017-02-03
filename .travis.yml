@@ -22,14 +22,14 @@ install:
 
 script:
   # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  - ansible-playbook tests/test.yml --syntax-check
 
   # Check that playbook runs without errors
-  - ansible-playbook tests/test.yml -i tests/inventory
+  - ansible-playbook tests/test.yml
 
   # Test idempotence
   - idempotence=$(mktemp)
-  - ansible-playbook tests/test.yml -i tests/inventory | tee -a ${idempotence}
+  - ansible-playbook tests/test.yml | tee -a ${idempotence}
   - >
     tail ${idempotence}
     | grep -q 'changed=0.*failed=0'

@@ -26,7 +26,7 @@ Example Playbook
 ----------------
 
 ```yaml
-- hosts: wiki
+- hosts: localhost
   roles:
      - bjoernalbers.gollum
 ```
