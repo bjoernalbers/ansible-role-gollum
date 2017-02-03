@@ -34,6 +34,14 @@ Example Playbook
      - bjoernalbers.gollum
 ```
 
+Development
+-----------
+
+1. Clone this repo and `cd` into it
+2. Install required roles: `ansible-galaxy install -r requirements.yml -p ..`
+3. Run the test playbook: `ansible-playbook tests/test.yml -K`
+4. Start hacking...
+
 License
 -------
 
