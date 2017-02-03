@@ -10,16 +10,17 @@ galaxy_info:
   - name: MacOSX
     versions:
      # all
-     - "10.10"
-     - "10.11"
-     # "10.12"
      # "10.7"
      # "10.8"
      # "10.9"
+     - "10.10"
+     - "10.11"
+     - "10.12"
 
   galaxy_tags:
     - gollum
     - wiki
+    - git
     - github
     - markdown
     - macos
