@@ -19,7 +19,7 @@ None.
 Dependencies
 ------------
 
-[bjoernalbers.rubygems](https://galaxy.ansible.com/bjoernalbers/module-rubygems/)
+[bjoernalbers.rubygems](https://galaxy.ansible.com/bjoernalbers/rubygems/)
 
 Example Playbook
 ----------------
