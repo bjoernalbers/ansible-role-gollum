@@ -1,2 +1,3 @@
 ---
-# defaults file for bjoernalbers.gollum
+gollum_host: 127.0.0.1
+gollum_port: 4567

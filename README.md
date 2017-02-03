@@ -15,7 +15,10 @@ Requirements
 Role Variables
 --------------
 
-None.
+```yaml
+gollum_host: 127.0.0.1
+gollum_port: 4567
+```
 
 Dependencies
 ------------
