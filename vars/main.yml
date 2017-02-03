@@ -5,7 +5,6 @@ gollum_group: admin
 gollum_home: "/usr/local/gollum"
 gollum_var: "{{ gollum_home }}/var"
 gollum_wiki: "{{ gollum_var }}/wiki.git"
-gollum_exe: "{{ gollum_home }}/bin/gollum"
 
 gollum_homebrew_packages:
   - libiconv

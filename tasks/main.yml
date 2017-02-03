@@ -51,7 +51,7 @@
       flags: "--use-system-libraries --with-xml2-include=/usr/local/opt/libxml2/include/libxml2"
 
 - name: install gollum
-  command: bundle install --path vendor --binstubs
+  command: bundle install --path vendor
   args:
     chdir: "{{ gollum_home }}"
   environment:

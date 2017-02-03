@@ -6,7 +6,9 @@
   <string>{{ gollum_launchd_label }}</string>
   <key>ProgramArguments</key>
   <array>
-    <string>{{ gollum_exe }}</string>
+    <string>/usr/local/bin/bundle</string>
+    <string>exec</string>
+    <string>gollum</string>
     <string>--host</string>
     <string>127.0.0.1</string>
     <string>--emoji</string>
