@@ -12,5 +12,13 @@ gollum_homebrew_packages:
   - libxslt
   - icu4c
 
+gollum_build_flags:
+  - gem: "charlock_holmes"
+    flags: "--with-icu-dir=/usr/local/opt/icu4c"
+  - gem: "nokogiri"
+    flags: >-
+      "--use-system-libraries"
+      "--with-xml2-include=/usr/local/opt/libxml2/include/libxml2"
+
 gollum_launchd_label: "com.github.gollum"
 gollum_launchd_plist: "/Library/LaunchDaemons/{{ gollum_launchd_label }}.plist"

@@ -44,11 +44,7 @@
   changed_when: '"CHANGED" in configure_build_flags.stdout'
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-  with_items:
-    - gem: "charlock_holmes"
-      flags: "--with-icu-dir=/usr/local/opt/icu4c"
-    - gem: "nokogiri"
-      flags: "--use-system-libraries --with-xml2-include=/usr/local/opt/libxml2/include/libxml2"
+  with_items: "{{ gollum_build_flags }}"
 
 - name: install gollum
   command: bundle install --path vendor
