@@ -1,10 +1,12 @@
 ---
 sudo: required
 language: objective-c
-# 10.11 (see https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version)
-osx_image: xcode7.3
+osx_image: xcode8.2
 
 install:
+  # Use system ruby
+  - rvm system
+
   # Install pip
   - sudo easy_install pip
 
@@ -24,8 +26,11 @@ script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml --syntax-check
 
-  # Check that playbook runs without errors
+  # Run the playbook
   - ansible-playbook tests/test.yml
+
+  # Check that launchd was loaded
+  - sudo launchctl list com.github.gollum
 
   # Test idempotence
   - idempotence=$(mktemp)
