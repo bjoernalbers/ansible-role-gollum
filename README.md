@@ -29,6 +29,18 @@ even to UNIX sockets.
 
 **This replaces `gollum_host` and `gollum_port` from previous versions!**
 
+### `gollum_options`
+
+Pass an [options
+hash](https://github.com/gollum/gollum/wiki/Gollum-via-Rack#the-options-hash)
+to gollum.
+Default:
+
+```yaml
+gollum_options: { }
+```
+
+
 Dependencies
 ------------
 

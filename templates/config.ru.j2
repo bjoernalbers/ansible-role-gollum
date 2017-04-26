@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 require 'gollum/app'
+require 'yaml'
 
 gollum_path = File.expand_path('{{ gollum_wiki }}')
-wiki_options = {}
+wiki_options = YAML.load('---
+{{ gollum_options | to_nice_yaml }}').each_with_object({}) { |(k,v),memo| memo[k.to_sym] = v }
 Precious::App.set(:gollum_path, gollum_path)
 Precious::App.set(:default_markup, :markdown)
 Precious::App.set(:wiki_options, wiki_options)
