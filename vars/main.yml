@@ -1,5 +1,5 @@
 ---
-gollum_user: "{{ ansible_user }}"
+gollum_user: "{{ ansible_user | default(lookup('env', 'USER')) }}"
 gollum_group: admin
 
 gollum_home: "/usr/local/gollum"

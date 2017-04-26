@@ -31,8 +31,8 @@ even to UNIX sockets.
 
 ### `gollum_options`
 
-Pass an [options
-hash](https://github.com/gollum/gollum/wiki/Gollum-via-Rack#the-options-hash)
+Pass an
+[options hash](https://github.com/gollum/gollum/wiki/Gollum-via-Rack#the-options-hash)
 to gollum.
 Default:
 
