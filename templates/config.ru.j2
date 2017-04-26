@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require 'gollum/app'
+
+gollum_path = File.expand_path('{{ gollum_wiki }}')
+wiki_options = {}
+Precious::App.set(:gollum_path, gollum_path)
+Precious::App.set(:default_markup, :markdown)
+Precious::App.set(:wiki_options, wiki_options)
+run Precious::App

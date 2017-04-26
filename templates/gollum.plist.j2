@@ -8,14 +8,10 @@
   <array>
     <string>/usr/local/bin/bundle</string>
     <string>exec</string>
-    <string>gollum</string>
-    <string>--host</string>
-    <string>{{ gollum_host }}</string>
-    <string>--port</string>
-    <string>{{ gollum_port }}</string>
-    <string>--emoji</string>
-    <string>--live-preview</string>
-    <string>{{ gollum_wiki }}</string>
+    <string>puma</string>
+    <string>--bind</string>
+    <string>{{ gollum_bind }}</string>
+    <string>{{ gollum_rackup }}</string>
   </array>
   <key>RunAtLoad</key>
   <true/>

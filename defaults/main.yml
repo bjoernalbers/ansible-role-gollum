@@ -1,3 +1,2 @@
 ---
-gollum_host: 127.0.0.1
-gollum_port: 4567
+gollum_bind: tcp://127.0.0.1:4567

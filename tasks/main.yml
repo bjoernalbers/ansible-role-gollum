@@ -63,6 +63,12 @@
     creates: "HEAD"
   notify: restart gollum
 
+- name: create rackup file
+  template:
+    src: "config.ru.j2"
+    dest: "{{ gollum_rackup }}"
+  notify: restart gollum
+
 - name: create gollum launchd plist
   template:
     src: "gollum.plist.j2"

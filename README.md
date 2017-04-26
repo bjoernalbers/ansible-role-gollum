@@ -15,10 +15,19 @@ Requirements
 Role Variables
 --------------
 
+### `gollum_bind`
+
+Defines which socket gollum will bind to which is by default...
+
 ```yaml
-gollum_host: 127.0.0.1
-gollum_port: 4567
+gollum_bind: tcp://127.0.0.1:4567
 ```
+
+You can use anything that [Puma](http://puma.io) would accept for
+[Binding TCP / Sockets](https://github.com/puma/puma#binding-tcp--sockets),
+even to UNIX sockets.
+
+**This replaces `gollum_host` and `gollum_port` from previous versions!**
 
 Dependencies
 ------------
