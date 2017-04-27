@@ -32,6 +32,7 @@
   copy:
     src: "Gemfile"
     dest: "{{ gollum_home }}"
+  notify: restart gollum
 
 - name: configure build flags
   shell: >
@@ -63,10 +64,37 @@
     creates: "HEAD"
   notify: restart gollum
 
-- name: create rackup file
+- name: create rackup
   template:
     src: "config.ru.j2"
     dest: "{{ gollum_rackup }}"
+  notify: restart gollum
+
+- name: create options
+  copy:
+    content: "{{ gollum_options | to_nice_yaml(indent=2) }}"
+    dest: "{{ gollum_options_path }}"
+    owner: "{{ gollum_user }}"
+    group: "{{ gollum_group }}"
+    mode: 0644
+  notify: restart gollum
+
+- name: create auth users
+  copy:
+    content: "{{ gollum_auth_users | to_nice_yaml(indent=2) }}"
+    dest: "{{ gollum_auth_users_path }}"
+    owner: "{{ gollum_user }}"
+    group: "{{ gollum_group }}"
+    mode: 0600
+  notify: restart gollum
+
+- name: create auth options
+  copy:
+    content: "{{ gollum_auth_options | to_nice_yaml(indent=2) }}"
+    dest: "{{ gollum_auth_options_path }}"
+    owner: "{{ gollum_user }}"
+    group: "{{ gollum_group }}"
+    mode: 0644
   notify: restart gollum
 
 - name: create gollum launchd plist

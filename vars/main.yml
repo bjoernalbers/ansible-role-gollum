@@ -7,6 +7,10 @@ gollum_var: "{{ gollum_home }}/var"
 gollum_wiki: "{{ gollum_var }}/wiki.git"
 gollum_rackup: "{{ gollum_home }}/config.ru"
 
+gollum_options_path: "{{ gollum_home }}/options.yml"
+gollum_auth_users_path: "{{ gollum_home }}/auth_users.yml"
+gollum_auth_options_path: "{{ gollum_home }}/auth_options.yml"
+
 gollum_homebrew_packages:
   - libiconv
   - libxml2
