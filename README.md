@@ -65,14 +65,15 @@ Instead of a *password_digest* you could also use the actual *password*:
 Here's an example of both variants:
 
 ```yaml
-- username: rick
-  password: asdf754&1129-@lUZw
-  name: Rick Sanchez
-  email: rick@example.com
-- username: morty
-  password_digest: 5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5
-  name: Morty Smith
-  email: morty@example.com
+gollum_auth_users:
+  - username: rick
+    password: asdf754&1129-@lUZw
+    name: Rick Sanchez
+    email: rick@example.com
+  - username: morty
+    password_digest: 5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5
+    name: Morty Smith
+    email: morty@example.com
 ```
 
 ### `gollum_auth_options`
