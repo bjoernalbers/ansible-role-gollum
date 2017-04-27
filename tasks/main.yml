@@ -11,7 +11,7 @@
   with_items:
     - "{{ gollum_home }}"
     - "{{ gollum_var }}"
-    - "{{ gollum_wiki }}"
+    - "{{ gollum_repo }}"
 
 - name: update homebrew
   homebrew:
@@ -60,7 +60,7 @@
 - name: initialize wiki
   command: git init --bare
   args:
-    chdir: "{{ gollum_wiki }}"
+    chdir: "{{ gollum_repo }}"
     creates: "HEAD"
   notify: restart gollum
 

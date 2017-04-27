@@ -3,9 +3,6 @@ require 'gollum/app'
 require 'gollum/auth'
 require 'yaml'
 
-wiki_path = '{{ gollum_wiki }}'
-options = YAML.load_file('{{ gollum_options_path }}').symbolize_keys
-
 {% if gollum_auth %}
 # Enable Authentication
 use Gollum::Auth,
@@ -13,7 +10,8 @@ use Gollum::Auth,
   YAML.load_file('{{ gollum_auth_options_path }}').symbolize_keys
 {% endif %}
 
-Precious::App.set(:gollum_path, wiki_path)
+Precious::App.set(:gollum_path, '{{ gollum_repo }}')
 Precious::App.set(:default_markup, :markdown)
-Precious::App.set(:wiki_options, options)
+Precious::App.set(:wiki_options,
+                  YAML.load_file('{{ gollum_options_path }}').symbolize_keys)
 run Precious::App
