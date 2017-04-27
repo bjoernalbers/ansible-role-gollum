@@ -5,6 +5,7 @@ gollum_group: admin
 gollum_home: "/usr/local/gollum"
 gollum_var: "{{ gollum_home }}/var"
 gollum_repo: "{{ gollum_var }}/wiki.git"
+gollum_log: "{{ gollum_var }}/gollum.log"
 gollum_rackup: "{{ gollum_home }}/config.ru"
 
 gollum_options_path: "{{ gollum_home }}/options.yml"
