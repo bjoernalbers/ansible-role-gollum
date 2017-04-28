@@ -3,9 +3,9 @@ Ansible Role: Gollum
 
 [![Build Status](https://travis-ci.org/bjoernalbers/ansible-role-gollum.svg?branch=master)](https://travis-ci.org/bjoernalbers/ansible-role-gollum)
 
-Install [Gollum Wiki](https://github.com/gollum/gollum) on macOS / Mac OS X.
+Install and manage [Gollum Wikis](https://github.com/gollum/gollum) on macOS.
 
-**NOTE: This version 1.0 is a rewrite with new API / role variables!**
+**NOTE: Version 1.0 is a complete rewrite with new role variables!**
 
 Requirements
 ------------
@@ -17,9 +17,11 @@ Requirements
 Role Variables
 --------------
 
-This role has only *one* top-level role variable on create multiple wikis:
-`gollum_wikis`.
-It comes with on sample wiki that listens on http://localhost:4567:
+This role has only *one* top-level role variable `gollum_wikis` - a dictionary
+of wiki (like virtual hosts on apache / nginx).
+Each wiki itself is a dictionary with custom settings: socket, users, options,
+etc.
+`gollum_wikis` comes with a [default wiki](http://localhost:4567):
 
 ```yaml
 gollum_wikis:
@@ -27,7 +29,7 @@ gollum_wikis:
     bind: tcp://127.0.0.1:4567
 ```
 
-Of course you can overwrite that with custom settings.
+But of course you can overwrite that.
 Here's a full example:
 
 ```yaml
