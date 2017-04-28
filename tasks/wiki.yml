@@ -1,0 +1,66 @@
+---
+- name: set wiki config | {{ item.key }}
+  set_fact:
+    wiki: |
+      {{ item.value | combine
+        ({
+          "name": item.key,
+          "home": [ gollum_home, item.key ] | join("/"),
+          "repo": [ gollum_home, item.key, "wiki.git" ] | join("/"),
+          "rackup": [ gollum_home, item.key, "config.ru" ] | join("/"),
+          "config": [ gollum_home, item.key, "config.json" ] | join("/"),
+          "launchd_label": [ gollum_launchd_prefix, item.key ] | join("."),
+          "log": [ gollum_home, item.key, "puma.log" ] | join("/")
+        })
+      }}
+
+- name: create git repository | {{ wiki.name }}
+  file:
+    path: "{{ wiki.repo }}"
+    owner: "{{ gollum_user }}"
+    group: "{{ gollum_group }}"
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: root
+  notify: restart gollum
+
+- name: initialize git repository | {{ wiki.name }}
+  command: git init --bare
+  args:
+    chdir: "{{ wiki.repo }}"
+    creates: "HEAD"
+  notify: restart gollum
+
+- name: create config file | {{ wiki.name }}
+  copy:
+    content: "{{ wiki | to_nice_json }}"
+    dest: "{{ wiki.config }}"
+    owner: "{{ gollum_user }}"
+    group: "{{ gollum_group }}"
+    mode: 0600
+  notify: restart gollum
+
+- name: create rackup file | {{ wiki.name }}
+  copy:
+    src: "{{ wiki.rackup | basename }}"
+    dest: "{{ wiki.rackup }}"
+  notify: restart gollum
+
+- name: create launchd plist | {{ wiki.name }}
+  template:
+    src: "gollum.plist.j2"
+    dest: "{{ [ gollum_launchd_dir, wiki.launchd_label + '.plist' ] | join('/') }}"
+    owner: root
+    group: wheel
+    mode: 0644
+  become: yes
+  become_user: root
+  notify: restart gollum
+
+- name: start gollum | {{ wiki.name }}
+  launchd:
+    name: "{{ wiki.launchd_label }}"
+    state: started
+  become: yes
+  become_user: root

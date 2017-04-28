@@ -3,15 +3,17 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>{{ gollum_launchd_label }}</string>
+  <string>{{ wiki.launchd_label }}</string>
   <key>ProgramArguments</key>
   <array>
     <string>/usr/local/bin/bundle</string>
     <string>exec</string>
     <string>puma</string>
     <string>--bind</string>
-    <string>{{ gollum_bind }}</string>
-    <string>{{ gollum_rackup }}</string>
+    <string>{{ wiki.bind }}</string>
+    <string>--tag</string>
+    <string>gollum {{ wiki.name }}</string>
+    <string>{{ wiki.rackup }}</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
@@ -22,8 +24,8 @@
   <key>UserName</key>
   <string>{{ gollum_user }}</string>
   <key>StandardOutPath</key>
-  <string>{{ gollum_log }}</string>
+  <string>{{ wiki.log }}</string>
   <key>StandardErrorPath</key>
-  <string>{{ gollum_log }}</string>
+  <string>{{ wiki.log }}</string>
 </dict>
 </plist>

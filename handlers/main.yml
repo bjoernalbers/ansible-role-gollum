@@ -1,7 +1,8 @@
 ---
 - name: restart gollum
   launchd:
-    name: "{{ gollum_launchd_label }}"
+    name: "{{ [ gollum_launchd_prefix, item] | join('.') }}"
     state: restarted
   become: yes
   become_user: root
+  with_items: "{{ gollum_wikis.keys() }}"

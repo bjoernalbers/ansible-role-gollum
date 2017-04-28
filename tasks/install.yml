@@ -1,0 +1,55 @@
+---
+- name: create basedir
+  file:
+    path: "{{ gollum_home }}"
+    owner: "{{ gollum_user }}"
+    group: "{{ gollum_group }}"
+    mode: 0700
+    state: directory
+  become: yes
+  become_user: root
+
+- name: update homebrew
+  homebrew:
+    update_homebrew: yes
+
+- name: add homebrew repository
+  homebrew_tap:
+    name: homebrew/dupes
+    state: present
+
+- name: install homebrew packages
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ gollum_homebrew_packages }}"
+  notify: restart gollum
+
+- name: copy gemfile
+  copy:
+    src: "Gemfile"
+    dest: "{{ gollum_home }}"
+  notify: restart gollum
+
+- name: configure build flags
+  shell: >
+    if ! grep -i "{{ item.gem }}.*{{ item.flags }}"
+    "{{ ansible_env.HOME }}/.bundle/config"; then
+      bundle config "build.{{ item.gem }}" "{{ item.flags }}";
+      echo "CHANGED";
+    fi
+  register: configure_build_flags
+  changed_when: '"CHANGED" in configure_build_flags.stdout'
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+  with_items: "{{ gollum_build_flags }}"
+
+- name: install gollum
+  command: bundle install --path vendor
+  args:
+    chdir: "{{ gollum_home }}"
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+  register: bundle_install
+  changed_when: '"Installing" in bundle_install.stdout'
+  notify: restart gollum

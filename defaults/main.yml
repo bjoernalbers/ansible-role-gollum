@@ -1,8 +1,4 @@
 ---
-gollum_bind: tcp://127.0.0.1:4567
-gollum_options: { }
-
-# Authentication
-gollum_auth: no
-gollum_auth_users: [ ]
-gollum_auth_options: { }
+gollum_wikis:
+  default:
+    bind: tcp://127.0.0.1:4567

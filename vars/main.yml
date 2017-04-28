@@ -3,14 +3,6 @@ gollum_user: "{{ ansible_user | default(lookup('env', 'USER')) }}"
 gollum_group: admin
 
 gollum_home: "/usr/local/gollum"
-gollum_var: "{{ gollum_home }}/var"
-gollum_repo: "{{ gollum_var }}/wiki.git"
-gollum_log: "{{ gollum_var }}/gollum.log"
-gollum_rackup: "{{ gollum_home }}/config.ru"
-
-gollum_options_path: "{{ gollum_home }}/options.yml"
-gollum_auth_users_path: "{{ gollum_home }}/auth_users.yml"
-gollum_auth_options_path: "{{ gollum_home }}/auth_options.yml"
 
 gollum_homebrew_packages:
   - libiconv
@@ -26,5 +18,5 @@ gollum_build_flags:
       "--use-system-libraries"
       "--with-xml2-include=/usr/local/opt/libxml2/include/libxml2"
 
-gollum_launchd_label: "com.github.gollum"
-gollum_launchd_plist: "/Library/LaunchDaemons/{{ gollum_launchd_label }}.plist"
+gollum_launchd_prefix: "com.github.gollum"
+gollum_launchd_dir: "/Library/LaunchDaemons"
