@@ -5,6 +5,11 @@ require 'gollum/auth'
 config = JSON.parse(File.read(Pathname.new(__FILE__).dirname + 'config.json'),
                     symbolize_names: true)
 
+module Gollum
+    # to require 'my_adapter':
+  Gollum::GIT_ADAPTER = "rugged"
+end
+
 if config[:users]
   use Gollum::Auth, config[:users], config.slice(:allow_guests)
 end

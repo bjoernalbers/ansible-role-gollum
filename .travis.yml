@@ -30,7 +30,7 @@ script:
   - ansible-playbook tests/test.yml
 
   # Check that launchd was loaded
-  - sudo launchctl list com.github.gollum
+  - sudo launchctl list com.github.gollum.default
 
   # Test idempotence
   - idempotence=$(mktemp)
