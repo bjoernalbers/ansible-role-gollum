@@ -9,6 +9,8 @@ gollum_homebrew_packages:
   - libxml2
   - libxslt
   - icu4c
+  - cmake
+  - pkg-config
 
 gollum_build_flags:
   - gem: "charlock_holmes"
@@ -17,6 +19,8 @@ gollum_build_flags:
     flags: >-
       "--use-system-libraries"
       "--with-xml2-include=/usr/local/opt/libxml2/include/libxml2"
+  - gem: "gollum-rugged_adapter"
+    flags: "--use-system-libraries"
 
 gollum_launchd_prefix: "com.github.gollum"
 gollum_launchd_dir: "/Library/LaunchDaemons"
